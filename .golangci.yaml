@@ -1,0 +1,16 @@
+linters:
+  enable-all: true
+  disable:
+    # Disable deprecated linters.
+    - deadcode
+    - exhaustivestruct
+    - golint
+    - ifshort
+    - interfacer
+    - maligned
+    - nosnakecase
+    - scopelint
+    - structcheck
+    - varcheck
+    # Depguard makes more sense for larger projects.
+    - depguard
