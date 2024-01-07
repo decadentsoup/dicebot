@@ -1,0 +1,13 @@
+[
+  {
+    "name": "roll",
+    "description": "Roll some dice. Run without any parameters for details on how to use this.",
+    "options": [
+      {
+        "type": 3,
+        "name": "formula",
+        "description": "Roll formula. If you do not specify one, I will reply with instructions."
+      }
+    ]
+  }
+]
