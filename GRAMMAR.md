@@ -6,8 +6,8 @@ This grammar is implemented by hand in `internal/lexer` and `internal/parser`.
 (* Whitespace is ignored. Commas are considered whitespace. *)
 
     formula = equation*;
-   equation = [name], term;
-       name = id, "=";
+   equation = [name, "="], term;
+       name = word, {word};
 
 (* "e/md/as" is referring to the acronym "PEMDAS" for order of operations *)
        term = e term;
@@ -23,7 +23,7 @@ bottom term = dice factor | unary term | "(", term, ")";
         int = digit, {digit};
       digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
 
-         id = ("_" | letter), ("_" | letter | number);
+       word = ("_" | letter), ("_" | letter | number);
      letter = ?any unicode letter?;
      number = ?any unicode number?;
 ```

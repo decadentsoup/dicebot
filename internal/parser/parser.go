@@ -1,6 +1,8 @@
 package parser
 
 import (
+	"strings"
+
 	"meganruggiero.com/dicebot/internal/ast"
 	"meganruggiero.com/dicebot/internal/lexer"
 	"meganruggiero.com/dicebot/internal/token"
@@ -66,13 +68,16 @@ func (parser *parser) parseEquation() (*ast.Equation, *expectation) {
 }
 
 func (parser *parser) parseOptionalEquationName() (string, *expectation) {
-	if parser.currentToken.Kind != token.ID {
-		return "", nil
+	words := []string{}
+
+	for parser.currentToken.Kind == token.Word {
+		words = append(words, parser.currentToken.String)
+		parser.readToken()
 	}
 
-	name := parser.currentToken.String
-
-	parser.readToken()
+	if len(words) == 0 {
+		return "", nil
+	}
 
 	if parser.currentToken.Kind != token.Equal {
 		return "", parser.expected(`"="`)
@@ -80,7 +85,7 @@ func (parser *parser) parseOptionalEquationName() (string, *expectation) {
 
 	parser.readToken()
 
-	return name, nil
+	return strings.Join(words, " "), nil
 }
 
 func (parser *parser) parseETerm() (ast.Term, *expectation) {

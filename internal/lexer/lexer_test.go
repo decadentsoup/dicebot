@@ -25,9 +25,9 @@ func TestLexer(t *testing.T) {
 		token.New(1, 16, token.D, "D"),
 		token.New(1, 17, token.Int, "8"),
 		token.New(1, 18, token.Unrecognized, "?"),
-		token.New(2, 1, token.ID, "keyword"),
+		token.New(2, 1, token.Word, "keyword"),
 		token.New(2, 9, token.Equal, "="),
-		token.New(2, 11, token.ID, "Value_1234"),
+		token.New(2, 11, token.Word, "Value_1234"),
 		token.New(2, 20, token.EOF, ""),
 	}
 

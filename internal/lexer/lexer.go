@@ -85,7 +85,7 @@ func (lexer *Lexer) Read() token.Token {
 		}
 	default:
 		if lexer.currentRune == '_' || unicode.IsLetter(lexer.currentRune) {
-			kind = token.ID
+			kind = token.Word
 			for lexer.currentRune == '_' || unicode.IsLetter(lexer.currentRune) || unicode.IsNumber(lexer.currentRune) {
 				lexer.readRune()
 			}

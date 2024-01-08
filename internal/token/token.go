@@ -18,7 +18,7 @@ const (
 	Subtract
 	D
 	Int
-	ID
+	Word
 )
 
 type Token struct {

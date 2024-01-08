@@ -15,7 +15,8 @@ func TestLexer(t *testing.T) {
 	formula, err := parser.Parse(`
 		50, 5d8, d20-8
 		pemdas = 5 + 2 * 8 / 4 ^ 7 ^ (8 - 1 D 100)
-		signs = 1 + +1 - -1
+		unary operations
+			aka signs = 1 + +1 - -1
 	`)
 	assert.NoError(t, err)
 	assert.Equal(t, &ast.Formula{Equations: []ast.Equation{
@@ -49,7 +50,7 @@ func TestLexer(t *testing.T) {
 			},
 		},
 		{
-			Name: "signs", Term: ast.SubtractTerm{
+			Name: "unary operations aka signs", Term: ast.SubtractTerm{
 				Left: ast.AddTerm{
 					Left:  ast.IntTerm{Value: 1},
 					Right: ast.IntTerm{Value: 0},
