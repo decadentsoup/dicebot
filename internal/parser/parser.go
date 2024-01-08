@@ -59,7 +59,7 @@ func (parser *parser) parseEquation() (*ast.Equation, *expectation) {
 		return nil, err
 	}
 
-	term, err := parser.parseETerm()
+	term, err := parser.parseMDTerm()
 	if err != nil {
 		return nil, err
 	}
@@ -86,26 +86,6 @@ func (parser *parser) parseOptionalEquationName() (string, *expectation) {
 	parser.readToken()
 
 	return strings.Join(words, " "), nil
-}
-
-func (parser *parser) parseETerm() (ast.Term, *expectation) {
-	left, err := parser.parseMDTerm()
-	if err != nil {
-		return nil, err
-	}
-
-	if parser.currentToken.Kind == token.Exponentiate {
-		parser.readToken()
-
-		right, err := parser.parseETerm()
-		if err != nil {
-			return nil, err
-		}
-
-		return ast.ExponentiateTerm{Left: left, Right: right}, nil
-	}
-
-	return left, nil
 }
 
 func (parser *parser) parseMDTerm() (ast.Term, *expectation) {
@@ -216,7 +196,7 @@ func (parser *parser) parseBottomTerm() (ast.Term, *expectation) {
 	case token.LeftParentheses:
 		parser.readToken()
 
-		term, err := parser.parseETerm()
+		term, err := parser.parseMDTerm()
 		if err != nil {
 			return nil, err
 		}

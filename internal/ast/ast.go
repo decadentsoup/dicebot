@@ -20,8 +20,6 @@ const (
 
 type Term any
 
-type ExponentiateTerm struct{ Left, Right Term }
-
 type MultiplyTerm struct{ Left, Right Term }
 
 type DivideTerm struct{ Left, Right Term }

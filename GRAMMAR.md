@@ -9,9 +9,7 @@ This grammar is implemented by hand in `internal/lexer` and `internal/parser`.
    equation = [name, "="], term;
        name = word, {word};
 
-(* "e/md/as" is referring to the acronym "PEMDAS" for order of operations *)
-       term = e term;
-     e term = md term, {"^", md term};
+       term = md term;
     md term = as term, {("*" | "/"), as term};
     as term = factor, {("+" | "-"), factor};
 bottom term = dice factor | unary term | "(", term, ")";
