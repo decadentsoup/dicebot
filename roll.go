@@ -26,7 +26,7 @@ func roll(input string) string {
 			name = humanize.Ordinal(index + 1)
 		}
 
-		fmt.Fprintf(&output, "\n**%v**: Not Implemented", discordEscapeMarkdown(name))
+		fmt.Fprintf(&output, "\n**%v**: %v", discordEscapeMarkdown(name), equation.Term.Solve())
 	}
 
 	return output.String()
