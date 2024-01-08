@@ -14,3 +14,8 @@ linters:
     - varcheck
     # Depguard makes more sense for larger projects.
     - depguard
+linters-settings:
+  ireturn:
+    allow:
+      - error
+      - meganruggiero\.com/dicebot/internal/ast\.Term

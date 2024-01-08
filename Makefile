@@ -1,5 +1,5 @@
 .POSIX:
-.PHONY: all lint clean
+.PHONY: all lint test clean
 .SUFFIXES:
 
 all: dist/dicebot
@@ -15,7 +15,10 @@ lint:
 	if ! diff go.sum go.sum.tmp; then echo "go.sum is not up to date; please run \"make tidy\"" 2>&1; exit 1; fi
 	rm go.mod.tmp go.sum.tmp
 
-	golangci-lint run .
+	golangci-lint run ./...
+
+test:
+	go test ./...
 
 clean:
 	rm -rf dist tmp

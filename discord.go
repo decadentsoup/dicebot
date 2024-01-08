@@ -8,6 +8,8 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
+	"unicode"
 
 	"github.com/gin-gonic/gin"
 )
@@ -156,12 +158,37 @@ func discordHandleInteractionRequestApplicationCommand(ctx *gin.Context, request
 }
 
 func discordHandleCommandRoll(command *discordInteractionRequestApplicationCommandData) *discordInteractionResponse {
-	formula := command.getStringOption("formula")
-
 	return &discordInteractionResponse{
 		Type: discordInteractionResponseChannelMessageWithSource,
 		Data: discordInteractionResponseMessageData{
-			Content: fmt.Sprintf("Roll: %v\nResult: Not Implemented", formula),
+			Content: roll(command.getStringOption("formula")),
 		},
 	}
+}
+
+func discordEscapeMarkdown(input string) string {
+	var output strings.Builder
+
+	for _, currentRune := range input {
+		// Skip anything non-printable. Avoids things like ANSI escape
+		// codes which Discord does actually support.
+		if !unicode.IsGraphic(currentRune) {
+			continue
+		}
+
+		// "\" + any ascii punctuation character works, so we do it to
+		// all in case Discord ever desides to extend their Markdown
+		// even more.
+		//
+		// "\" + any other character will include the "\" literally so
+		// we cannot just insert "\" before every character in the input
+		// string and call it a day.
+		if strings.ContainsRune("!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~", currentRune) {
+			output.WriteByte('\\')
+		}
+
+		output.WriteRune(currentRune)
+	}
+
+	return output.String()
 }
