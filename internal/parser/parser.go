@@ -39,7 +39,7 @@ func (parser *parser) readToken() {
 }
 
 func (parser *parser) parseFormula() (*ast.Formula, *expectation) {
-	equations := make([]ast.Equation, 0)
+	equations := []ast.Equation{}
 
 	for parser.currentToken.Kind != token.EOF {
 		equation, err := parser.parseEquation()
