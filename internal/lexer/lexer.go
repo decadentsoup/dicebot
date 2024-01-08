@@ -1,6 +1,7 @@
 package lexer
 
 import (
+	"regexp"
 	"unicode"
 	"unicode/utf8"
 
@@ -8,6 +9,9 @@ import (
 )
 
 const eof = rune(-1)
+
+// Matches "d", case-insensitive, with digits after it.
+var regexpD = regexp.MustCompile(`\A[Dd]\d+\z`)
 
 type Lexer struct {
 	input           string
@@ -75,9 +79,6 @@ func (lexer *Lexer) Read() token.Token {
 	case '-':
 		kind = token.Subtract
 		lexer.readRune()
-	case 'D', 'd':
-		kind = token.D
-		lexer.readRune()
 	case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9':
 		kind = token.Int
 		for '0' <= lexer.currentRune && lexer.currentRune <= '9' {
@@ -96,6 +97,10 @@ func (lexer *Lexer) Read() token.Token {
 	}
 
 	str := lexer.input[start:lexer.offset]
+
+	if regexpD.MatchString(str) {
+		kind = token.D
+	}
 
 	return token.New(line, column, kind, str)
 }

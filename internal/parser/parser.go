@@ -172,16 +172,10 @@ func (parser *parser) parseASTerm() (ast.Term, *expectation) {
 	}
 }
 
-//nolint:cyclop,funlen
+//nolint:cyclop
 func (parser *parser) parseBottomTerm() (ast.Term, *expectation) {
 	switch parser.currentToken.Kind { //nolint:exhaustive
 	case token.D:
-		parser.readToken()
-
-		if parser.currentToken.Kind != token.Int {
-			return nil, parser.expected("integer")
-		}
-
 		faces := parser.currentToken.Int()
 		parser.readToken()
 
@@ -192,12 +186,6 @@ func (parser *parser) parseBottomTerm() (ast.Term, *expectation) {
 		parser.readToken()
 
 		if parser.currentToken.Kind == token.D {
-			parser.readToken()
-
-			if parser.currentToken.Kind != token.Int {
-				return nil, parser.expected("integer")
-			}
-
 			faces := parser.currentToken.Int()
 			parser.readToken()
 

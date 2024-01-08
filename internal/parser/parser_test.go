@@ -14,7 +14,7 @@ func TestLexer(t *testing.T) {
 
 	formula, err := parser.Parse(`
 		50, 5d8, d20-8
-		pemdas = 5 + 2 * 8 / 4 ^ 7 ^ (8 - 1 D 100)
+		pemdas = 5 + 2 * 8 / 4 ^ 7 ^ (8 - 1 D100)
 		unary operations
 			aka signs = 1 + +1 - -1
 	`)
@@ -60,8 +60,8 @@ func TestLexer(t *testing.T) {
 		},
 	}}, formula)
 
-	formula, err = parser.Parse("2d4 + d 20 - -1, keyword 4 D8")
-	assert.EqualError(t, err, `line 1 column 26: expected "=", got "4"`)
+	formula, err = parser.Parse("2d4 + d20 - -1, keyword 4 D8")
+	assert.EqualError(t, err, `line 1 column 25: expected "=", got "4"`)
 	assert.Nil(t, formula)
 
 	formula, err = parser.Parse("!")

@@ -23,6 +23,7 @@ bottom term = dice factor | unary term | "(", term, ")";
         int = digit, {digit};
       digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
 
+(* Word cannot match a dice term to avoid ambiguity. *)
        word = ("_" | letter), ("_" | letter | number);
      letter = ?any unicode letter?;
      number = ?any unicode number?;
